@@ -1,24 +1,21 @@
 class Solution {
 public:
-    bool isHappy(int n) {
-        long long k = n, ans;
-        set<int> s;
-        while (true) {
-            if (s.find(k) != s.end())
-                return false;
-            s.insert(k);
-            if (k == 1)
-                break;
-            if (k < 4)
-                return false;
-            ans = 0;
-            while (k > 0) {
-                int p = k % 10;
-                ans = ans + (p * p);
-                k /= 10;
-            }
-            k = ans;
+    int getnumber(int p){
+        int ans=0;
+        while(p>0){
+            int last=p%10;
+            ans+=(last * last);
+            p/=10;
         }
-        return true;
+        return ans;
+    }
+    bool isHappy(int n) {
+        int sl=n;
+        int fa=getnumber(n);
+        while(fa !=1 && fa!= sl){
+            sl=getnumber(sl);
+            fa=getnumber(getnumber(fa));
+        }
+        return fa==1;
     }
 };
