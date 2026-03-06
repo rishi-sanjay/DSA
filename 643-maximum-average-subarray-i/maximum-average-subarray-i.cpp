@@ -8,9 +8,9 @@ public:
             if(i>=(k-1)){
                 if(j !=-1) sum -=nums[j];
                 j++;
-                ans=max(ans,sum/k);
+                ans=max(ans,sum);
             }
         }
-        return ans;
+        return ans/k;
     }
 };
