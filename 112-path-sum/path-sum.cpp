@@ -12,21 +12,13 @@
  */
 class Solution {
 public:
-    bool boss(TreeNode* root, int targetSum, int sum) {
-        sum += root->val;
-        if (sum == targetSum && (!root->left && !root->right))
-            return true;
-
-        bool x = 0, y = 0;
-        if (root->left)
-            x = boss(root->left, targetSum, sum);
-        if (root->right)
-            y = boss(root->right, targetSum, sum);
-        return x || y;
-    }
     bool hasPathSum(TreeNode* root, int targetSum) {
-        if (root == nullptr)
+        if (root == NULL)
             return false;
-        return boss(root, targetSum, 0);
+        targetSum -= root->val;
+        if (!root->left && !root->right)
+            return targetSum == 0;
+        return hasPathSum(root->left, targetSum) ||
+               hasPathSum(root->right, targetSum);
     }
 };
