@@ -1,33 +1,30 @@
 class Solution {
   public:
-    void boss(vector<string> &ans,vector<vector<int>> & m,int i,int j,string s,int n){
-       if(i==n && j==n){
-           ans.push_back(s);
-           return;
-       }
-       if(m[i][j]==1){
-           m[i][j]=0;
-       
-     if(i !=0 &&m[i-1][j]==1){//top
-         boss(ans,m,i-1,j,s+'U',n);
-     }if(i !=(n) && m[i+1][j]==1){
-         boss(ans,m,i+1,j,s+'D',n);
-     }if(j !=0 && m[i][j-1]==1){
-         boss(ans,m,i,j-1,s+'L',n);
-     }        
-     if(j !=(n) && m[i][j+1]==1){
-         boss(ans,m,i,j+1,s+'R',n);
-     }
-     m[i][j]=1;
+   void boss(vector<vector<int>>& rat,int i,int j,string temp,vector<string>&ans,int n){
+        if(i==(n-1) && j==(n-1)){
+            ans.push_back(temp);
+            return;
+        }
+        if(rat[i][j]==1){
+            rat[i][j]=0;
+            if(i!=0 && rat[i-1][j]!=0)                    //top
+              boss(rat,i-1,j,temp +'U',ans,n);
+            if(i!=(n-1) && rat[i+1][j]!=0)                    //down
+               boss(rat,i+1,j,temp+'D',ans,n);
+            if(j!=0 && rat[i][j-1]!=0)              //left
+              boss(rat,i,j-1,temp+'L',ans,n);
+            if(j!=(n-1) && rat[i][j+1]!=0)              //right
+              boss(rat,i,j+1,temp+'R',ans,n); 
+            rat[i][j]=1;
+        }
     }
-    }
-    
-    vector<string> ratInMaze(vector<vector<int>>& maze) {
+    vector<string> ratInMaze(vector<vector<int>>&rat) {
         // code here
-        vector <string> ans;
-        int n=maze.size()-1;
-        boss(ans,maze,0,0,"",n);
-        sort(ans.begin(),ans.end());
-        return ans;
+         int n=rat.size();
+         vector<string>ans;
+         boss(rat,0,0,"",ans,n);
+         sort(ans.begin(),ans.end());
+         return ans;
+         
     }
 };
