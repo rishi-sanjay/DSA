@@ -1,28 +1,27 @@
 class Solution {
 public:
-    int boss(vector<vector<char>>& mi, string& s, int i, int j, int idx, int m,
-             int n, bool x, bool y) {
+    bool boss(vector<vector<char>>& mi, string& s, int i, int j, int idx, int m,
+              int n) {
         if (idx == s.size()) {
-            return idx;
+            return true;
         }
-        char temp=mi[i][j];
-        mi[i][j]='#';
-
-        int re=0;
-        if (i < m - 1 && s[idx] == mi[i + 1][j]) {       // down
-            re=max(re, boss(mi, s, i + 1, j, idx + 1, m, n, true, true));
+        char temp = mi[i][j];
+        mi[i][j] = '#';
+        bool x=0, y=0, z=0, w=0;
+        if (i != m - 1 && s[idx] == mi[i + 1][j]) { // down
+            x = boss(mi, s, i + 1, j, idx + 1, m, n);
         }
-        if (j < (n - 1) && s[idx] == mi[i][j + 1] && y == true) { // right
-            re=max(re, boss(mi, s, i, j + 1, idx + 1, m, n, false, true));
+        if (j != (n - 1) && s[idx] == mi[i][j + 1]) { // right
+            y = boss(mi, s, i, j + 1, idx + 1, m, n);
         }
-        if (j > 0 && s[idx] == mi[i][j - 1] && x == true) {
-            re=max(re, boss(mi, s, i, j - 1, idx + 1, m, n, true, false)); // left
+        if (j != 0 && s[idx] == mi[i][j - 1]) {
+            w = boss(mi, s, i, j - 1, idx + 1, m, n); // left
         }
-        if (i > 0 && s[idx] == mi[i - 1][j]) {                     // up
-            re=max(re, boss(mi, s, i - 1, j, idx + 1, m, n, true, true));
+        if (i != 0 && s[idx] == mi[i - 1][j]) { // up
+            z = boss(mi, s, i - 1, j, idx + 1, m, n);
         }
-        mi[i][j]=temp;
-        return re;
+        mi[i][j] = temp;
+        return x || y || z || w;
     }
     bool exist(vector<vector<char>>& board, string word) {
         int m = board.size();
@@ -31,8 +30,8 @@ public:
             for (int j = 0; j < n; j++) {
                 int idx = 0;
                 if (word[idx] == board[i][j]) {
-                    int c = boss(board, word, i, j, idx + 1, m, n, true, true);
-                    if (c == word.size()) {
+                    bool c = boss(board, word, i, j, idx + 1, m, n);
+                    if (c == true) {
                         return true;
                     }
                 }
