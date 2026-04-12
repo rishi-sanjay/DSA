@@ -5,7 +5,7 @@ public:
         for(int val:nums){
             if(val==0) return 0;
             else if(val<0)
-               ans*=(-1);
+               ans=-ans;
         }
         return ans;
     }
