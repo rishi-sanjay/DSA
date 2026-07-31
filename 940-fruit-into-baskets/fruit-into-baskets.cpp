@@ -1,24 +1,19 @@
 class Solution {
 public:
     int totalFruit(vector<int>& fruits) {
-        int r = 0, l = 0, rem, idx=0, mxlen = 0,count;
-        set<int> s;
+        int r = 0, l = 0, mxlen = 0;
+        unordered_map<int, int> m;
         while (r < fruits.size()) {
-            count=0,r=idx;
-            rem = -1;
-            while (r < fruits.size() && s.size() <= 2) {
-                s.insert(fruits[r]);
-                if (s.size() == 2) {
-                    if (rem == -1 || rem != fruits[r]) {
-                        rem = fruits[r];
-                        idx = r;
-                    }
-                }
-                if(s.size()<=2) count+=1;
-                r += 1;
+            m[fruits[r]] += 1;
+            if (m.size() > 2) {
+                m[fruits[l]] -= 1;
+                if (m[fruits[l]] == 0)
+                    m.erase(fruits[l]);
+                l += 1;
             }
-            s.clear();
-            mxlen = max(mxlen,count);
+            if (m.size() <= 2)
+                mxlen = max(mxlen, r - l + 1);
+            r += 1;
         }
         return mxlen;
     }
