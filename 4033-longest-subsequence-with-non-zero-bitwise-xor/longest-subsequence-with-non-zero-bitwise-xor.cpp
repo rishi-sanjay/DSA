@@ -1,20 +1,22 @@
 class Solution {
 public:
     int longestSubsequence(vector<int>& nums) {
-        int xr=0,ans=0,r=0,l=0;
-        int sz=nums.size()-1;
-        unordered_map<int,int>m;
-        while(r<nums.size()){
-            xr^=nums[r];
-            if(xr != 0 ){
-                ans=max(ans,r+1);
+        int xr = 0, ans = 0, r = 0, count = 0;
+        int sz = nums.size();
+        while (r < sz) {
+            xr ^= nums[r];
+            if (xr != 0) {
+                ans = r + 1;
+                if (nums[r] > 0)
+                    count++;
             }
-            if(xr ==0 && m.size() >1)
-               ans=max(ans,r);
-            if(m.find(xr)==m.end())
-               m[xr]++;
-            r+=1;
+            r += 1;
         }
-        return ans;
+        if (count == 0)
+            return 0;
+        if (xr != 0)
+            return ans;
+        else
+            return sz - 1;
     }
 };
