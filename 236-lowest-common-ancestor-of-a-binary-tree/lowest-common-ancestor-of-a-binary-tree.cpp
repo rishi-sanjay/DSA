@@ -9,7 +9,8 @@
  */
 class Solution {
 public:
-    bool check(TreeNode* root, TreeNode* p, unordered_map<int, TreeNode*>& m, int r) {
+    bool check(TreeNode* root, TreeNode* p, unordered_map<int, TreeNode*>& m,
+               int r) {
         if (root == nullptr)
             return false;
         m[r] = root;
@@ -21,14 +22,15 @@ public:
         return false;
     }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        unordered_map<int, TreeNode*>m,n;
-        check(root,p,m,0);
-        check(root,q,n,0);
-        int sz=min(m.size(),n.size());
-        for(int i=sz-1;i>=0;i--){
-            if(m[i]==n[i]) 
-               return m[i];
-        }
-        return root;
+        if (root == NULL || root == p || root == q)
+            return root;
+        TreeNode* left = lowestCommonAncestor(root->left, p, q);
+        TreeNode* right = lowestCommonAncestor(root->right, p, q);
+        if (left == NULL)
+            return right;
+        else if (right == NULL)
+            return left;
+        else
+         return root;
     }
 };
