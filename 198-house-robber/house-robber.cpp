@@ -4,16 +4,12 @@ public:
         int n=nums.size();
         vector<int>ans(n,0);
         ans[0]=nums[0];
-        int money=ans[0];
         for(int i=1;i<n;i++){
-            ans[i]=nums[i];
-            int j=2;
-            while(i-j>=0){
-              ans[i]=max(ans[i-j]+nums[i],ans[i]);
-              j+=1;
-            }
-              money=max(money,ans[i]);
+            if(i-2>=0)
+               ans[i]=max(ans[i-2]+nums[i],ans[i-1]);
+            else
+               ans[i]=max(ans[i-1],nums[i]);
         }
-        return money;
+        return ans[n-1];
     }
 };
