@@ -22,7 +22,7 @@ public:
         }
         if (sum % 2)
             return false;
-        vector<vector<int>> dp(i + 1, vector<int>(sum + 1, -1));
+        vector<vector<int>> dp(i , vector<int>(sum , -1));
         return call(sum / 2, nums, i - 1, dp);
     }
 };
