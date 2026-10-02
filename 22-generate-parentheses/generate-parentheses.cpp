@@ -1,21 +1,23 @@
 class Solution {
 public:
-    void boss(string temp, vector<string>& ans, int n, int st, int end) {
+    void generate(vector<string>& ans, string temp, int L, int R, int n) {
         if (temp.size() == 2 * n) {
             ans.push_back(temp);
-            return;
         }
-        if (st < n) {
-            boss(temp + '(', ans, n, st + 1, end);
+        if (L < n) {
+            L += 1;
+            generate(ans, temp + '(', L, R, n);
+            L -= 1;
         }
-        if (st > end) {
-            boss(temp + ')', ans, n, st, end + 1);
+        if (R < L) {
+            R += 1;
+            generate(ans, temp + ')', L, R, n);
+            R -= 1;
         }
     }
     vector<string> generateParenthesis(int n) {
         vector<string> ans;
-        string temp = "";
-        boss("", ans, n, 0, 0);
+        generate(ans, "", 0, 0, n);
         return ans;
     }
 };
