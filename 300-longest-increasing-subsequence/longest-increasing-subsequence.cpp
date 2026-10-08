@@ -6,7 +6,6 @@ public:
         if (dp[idx][j + 1] != -1)
             return dp[idx][j+1];
         int np = call(nums, idx + 1, dp, j);
-
         int p = 0;
         if (j == -1 || nums[idx] > nums[j])
             p = 1 + call(nums, idx + 1, dp,  idx);
